@@ -1,19 +1,27 @@
-/* eslint-disable */
-function updateStudentGradeByCity(students, city, newGrades) {
-    const studentsInCity = students.filter((student) => student.location === city);
-    return studentsInCity.map((student) => {
-      const filteredGrades = newGrades.filter((grade) => grade.studentId === student.id);
-      if (filteredGrades.length > 0) {
-        return {
-          ...student,
-          grade: filteredGrades[0].grade,
-        };
-      }
-      return {
-        ...student,
-        grade: 'N/A',
-      };
-    });
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-param-reassign */
+
+export default function updateStudentGradeByCity(studArray, city, newGrades) {
+  if (!Array.isArray(studArray)) {
+    throw new TypeError(`${studArray} is not a valid student array`);
   }
-  
-  export default updateStudentGradeByCity;
+  if (typeof city !== 'string') {
+    throw new TypeError(`${city} is not a valid city name`);
+  }
+  if (!Array.isArray(newGrades)) {
+    throw new TypeError(`${newGrades} is not a valid grades array`);
+  }
+
+  const cityStuds = studArray.filter((student) => student.location === city);
+  return cityStuds.map((student) => {
+    for (const gradesData of newGrades) {
+      if (!student.hasOwnProperty('grade')) {
+        student.grade = 'N/A';
+      }
+      if (gradesData.studentId === student.id) {
+        student.grade = gradesData.grade;
+      }
+    }
+    return student;
+  });
+}

@@ -1,13 +1,17 @@
-const cleanSet = (set, startString) => {
-  const strings = [];
+/*
+ * function named cleanSet that returns a string
+ * of all the set values that start with a
+ * specific string (startString).It accepts two arguments:
+ *  a set (Set) and a startString (String)
+*/
 
-  if (startString === '' || typeof startString !== 'string') return '';
-  set.forEach((s) => {
-    if (typeof s === 'string' && s.startsWith(startString)) {
-      strings.push(s.slice(startString.length));
-    }
-  });
-  return strings.join('-');
-};
-
-export default cleanSet;
+export default function cleanSet(set, startString) {
+  // validate the types of the arguments at runtime
+  if (startString === undefined || startString.length === 0) {
+    return '';
+  }
+  return [...set]
+    .filter((str) => (str !== undefined ? str.startsWith(startString) : ''))
+    .map((str) => (str !== undefined ? str.slice(startString.length) : ''))
+    .join('-');
+}
