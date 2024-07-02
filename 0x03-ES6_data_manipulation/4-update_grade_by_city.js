@@ -1,27 +1,32 @@
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-param-reassign */
+/**
+ * Updates the grades of a list of students in a given city.
+ * @param {{
+ *   id: Number,
+ *   firstName: String,
+ *   location: String
+ * }[]} students - The list of students.
+ * @param {*} city - The city of students.
+ * @param {{
+ *   studentId: Number,
+ *   grade: Number,
+ * }[]} newGrades - The new grades to be given to a student.
+ * @author Bezaleel Olakunori <https://github.com/B3zaleel>
+ * @returns {{id: Number, firstName: String, location: String}[]}
+ */
+export default function updateStudentGradeByCity(students, city, newGrades) {
+  const defaultGrade = { grade: 'N/A' };
 
-export default function updateStudentGradeByCity(studArray, city, newGrades) {
-  if (!Array.isArray(studArray)) {
-    throw new TypeError(`${studArray} is not a valid student array`);
+  if (students instanceof Array) {
+    return students
+      .filter((student) => student.location === city)
+      .map((student) => ({
+        id: student.id,
+        firstName: student.firstName,
+        location: student.location,
+        grade: (newGrades
+          .filter((grade) => grade.studentId === student.id)
+          .pop() || defaultGrade).grade,
+      }));
   }
-  if (typeof city !== 'string') {
-    throw new TypeError(`${city} is not a valid city name`);
-  }
-  if (!Array.isArray(newGrades)) {
-    throw new TypeError(`${newGrades} is not a valid grades array`);
-  }
-
-  const cityStuds = studArray.filter((student) => student.location === city);
-  return cityStuds.map((student) => {
-    for (const gradesData of newGrades) {
-      if (!student.hasOwnProperty('grade')) {
-        student.grade = 'N/A';
-      }
-      if (gradesData.studentId === student.id) {
-        student.grade = gradesData.grade;
-      }
-    }
-    return student;
-  });
+  return [];
 }

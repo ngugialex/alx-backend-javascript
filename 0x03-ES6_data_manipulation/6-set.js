@@ -1,6 +1,9 @@
-export default function setFromArray(inputArray) {
-  if (Array.isArray(inputArray)) {
-    return new Set(inputArray);
-  }
-  throw new TypeError(`${inputArray} is not exactly an array is it?`);
+/**
+ * Creates a set from an array.
+ * @param {Array} array - The source array.
+ * @author Bezaleel Olakunori <https://github.com/B3zaleel>
+ * @returns {Set}
+ */
+export default function setFromArray(array) {
+  return new Set(array);
 }

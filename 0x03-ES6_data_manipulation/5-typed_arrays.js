@@ -1,17 +1,16 @@
-/*
- * typed arrays
-*/
-
+/**
+ * Creates a buffer array with a given position set to a given value.
+ * @param {Number} length - The length of the buffer.
+ * @param {Number} position - The position to modify.
+ * @param {Number} value - The value to be stored in the position.
+ * @author Bezaleel Olakunori <https://github.com/B3zaleel>
+ * @returns {DataView}
+ */
 export default function createInt8TypedArray(length, position, value) {
-  if (typeof length !== 'number' || typeof position !== 'number' || typeof value !== 'number') {
-    throw new Error('Position outside range');
-  }
   if (position >= length) {
     throw new Error('Position outside range');
   }
-  const buff = new ArrayBuffer(length);
-  const nView = new DataView(buff, 0, length);
-  const arr = new Int8Array(buff);
-  arr[position] = value;
-  return nView;
+  const buf = new DataView(new ArrayBuffer(length), 0, length);
+  buf.setInt8(position, value);
+  return buf;
 }

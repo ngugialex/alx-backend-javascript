@@ -1,25 +1,10 @@
-/*
- * check if all elements in an array are
- * also present in a set
-*/
-
+/**
+ * Checks if a set contains each element in an array.
+ * @param {Set} set - The collection of unique items.
+ * @param {*} array - The array of items.
+ * @author Bezaleel Olakunori <https://github.com/B3zaleel>
+ * @returns {Boolean}
+ */
 export default function hasValuesFromArray(set, array) {
-  if (!(set instanceof Set)) {
-    throw new TypeError(`${set} is not a valid set`);
-  }
-  if (!Array.isArray(array)) {
-    throw new TypeError(`${array} is not a valid array`);
-  }
-  /*
-    // We could implement this way ->
-    for (const element of array) {
-      if (!set.has(element)) {
-        return false;
-      }
-    }
-
-    return true;
-    */
-  const bools = array.map((elem) => set.has(elem));
-  return bools.every((item) => Boolean(item));
+  return array.every((value) => set.has(value));
 }
